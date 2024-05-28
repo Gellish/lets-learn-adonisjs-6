@@ -7,7 +7,7 @@
 |
 */
 
-import router from '@adonisjs/core/services/router'
+import route from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 const AdminDashboardController = () => import('#controllers/admin/dashboard_controller')
 const AvatarsController = () => import('#controllers/avatars_controller')
@@ -22,64 +22,64 @@ const DirectorsController = () => import('#controllers/directors_controller')
 const MoviesController = () => import('#controllers/movies_controller')
 const RedisController = () => import('#controllers/redis_controller')
 
-router.get('/', [HomeController, 'index']).as('home')
+route.get('/', [HomeController, 'index']).as('home')
 
-router.get('/avatars/:filename', [AvatarsController, 'show']).as('avatars.show')
+route.get('/avatars/:filename', [AvatarsController, 'show']).as('avatars.show')
 
-router.get('/movies', [MoviesController, 'index']).as('movies.index')
+route.get('/movies', [MoviesController, 'index']).as('movies.index')
 
-router
+route
   .get('/movies/:slug', [MoviesController, 'show'])
   .as('movies.show')
-  .where('slug', router.matchers.slug())
+  .where('slug', route.matchers.slug())
 
-router
+route
   .group(() => {
-    router.get('/watchlist', [WatchlistsController, 'index']).as('index')
-    router.post('/watchlists/:movieId/toggle', [WatchlistsController, 'toggle']).as('toggle')
-    router
+    route.get('/watchlist', [WatchlistsController, 'index']).as('index')
+    route.post('/watchlists/:movieId/toggle', [WatchlistsController, 'toggle']).as('toggle')
+    route
       .post('/watchlists/:movieId/toggle-watched', [WatchlistsController, 'toggleWatched'])
       .as('toggle.watched')
   })
   .as('watchlists')
   .use(middleware.auth())
 
-router.get('/directors', [DirectorsController, 'index']).as('directors.index')
-router.get('/directors/:id', [DirectorsController, 'show']).as('directors.show')
+route.get('/directors', [DirectorsController, 'index']).as('directors.index')
+route.get('/directors/:id', [DirectorsController, 'show']).as('directors.show')
 
-router.get('/writers', [WritersController, 'index']).as('writers.index')
-router.get('/writers/:id', [WritersController, 'show']).as('writers.show')
+route.get('/writers', [WritersController, 'index']).as('writers.index')
+route.get('/writers/:id', [WritersController, 'show']).as('writers.show')
 
-router.delete('/redis/flush', [RedisController, 'flush']).as('redis.flush')
-router.delete('/redis/:slug', [RedisController, 'destroy']).as('redis.destroy')
+route.delete('/redis/flush', [RedisController, 'flush']).as('redis.flush')
+route.delete('/redis/:slug', [RedisController, 'destroy']).as('redis.destroy')
 
-router.get('/profile/edit', [ProfilesController, 'edit']).as('profiles.edit').use(middleware.auth())
-router.put('/profiles', [ProfilesController, 'update']).as('profiles.update').use(middleware.auth())
-router.get('/profiles/:id', [ProfilesController, 'show']).as('profiles.show')
+route.get('/profile/edit', [ProfilesController, 'edit']).as('profiles.edit').use(middleware.auth())
+route.put('/profiles', [ProfilesController, 'update']).as('profiles.update').use(middleware.auth())
+route.get('/profiles/:id', [ProfilesController, 'show']).as('profiles.show')
 
-router
+route
   .group(() => {
-    router
+    route
       .get('/register', [RegisterController, 'show'])
       .as('register.show')
       .use(middleware.guest())
 
-    router
+    route
       .post('/register', [RegisterController, 'store'])
       .as('register.store')
       .use(middleware.guest())
 
-    router.get('/login', [LoginController, 'show']).as('login.show').use(middleware.guest())
-    router.post('/login', [LoginController, 'store']).as('login.store').use(middleware.guest())
+    route.get('/login', [LoginController, 'show']).as('login.show').use(middleware.guest())
+    route.post('/login', [LoginController, 'store']).as('login.store').use(middleware.guest())
 
-    router.post('/logout', [LogoutController, 'handle']).as('logout').use(middleware.auth())
+    route.post('/logout', [LogoutController, 'handle']).as('logout').use(middleware.auth())
   })
   .prefix('/auth')
   .as('auth')
 
-router
+route
   .group(() => {
-    router.get('/', [AdminDashboardController, 'handle']).as('dashboard')
+    route.get('/', [AdminDashboardController, 'handle']).as('dashboard')
   })
   .prefix('/admin')
   .as('admin')
