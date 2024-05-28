@@ -1,7 +1,7 @@
 ![Adocasts](https://github.com/adocasts/.github/blob/main/assets/brand-banner-rounded.png?raw=true)
 # Let's Learn AdonisJS 6
 
-In this series, we'll learn AdonisJS 6 step-by-step in a beginner-friendly way. 
+In this seriesssss, we'll learn AdonisJS 6 step-by-step in a beginner-friendly way. 
 Covering topics like routing, controllers, services, EdgeJS, Lucid ORM, forms, filtering, 
 authentication, etc.
 
